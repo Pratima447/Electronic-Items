@@ -1,0 +1,84 @@
+<%# views/home %>
+
+<%- include('../common/header.ejs') %>
+
+<body>
+    <section  class="section container-fluid">
+        <div class="row">
+            <!-- Details Form -->
+            <div id ="register_form" class="col-md-offset-3 col-md-6 font_family_all p_15 z-depth-2">
+                <div class="row m_t_10">
+                    <div class="col-md-offset-1 col-md-6">
+                        <div class="border_radius_5">
+                            <div class="white_text font_22">
+                                <center class="font_size_18">All fields are mandatory</center>
+                            </div>
+                        </div>
+                        <!-- <form action="upload_data" method="POST"> -->
+                            <div class="row form-group">
+                                <input value="<%= data.name %>" type="text" id="name" name="name" class="form-control col-md-8" placeholder="Name" autocomplete="off">
+                            </div>
+                            <div class="row form-group">
+                                <textarea name="desc" id="desc" cols="30" rows="10" class="form-control col-md-8"  placeholder="Description"><%= data.desc %></textarea>
+                            </div>
+                        
+                            <div class="row form-group">
+                                <input value="<%= data.pic %>" type="file" id="pic" name="pic" accept = "image/*" class="row line_h_2  col-md-8">
+                            </div>
+
+                            <div class="row form-group">
+                                <select name="item_type" id="item_type" class="form-control col-md-8" value="<%= data.type %>">
+                                    <option value="<%= data.type %>" selected><%= data.type %></option>
+                                    <option value="mobile">Mobile</option>
+                                    <option value="laptop">Laptop</option>
+                                </select>
+                            </div>
+                            
+                            <div id="item_attr">
+                                <!-- attributes here -->
+                                <% if (data.type == 'mobile') { %>
+                                    <div class="row form-group">
+                                        <input value="<%= data.processor %>" required="" class="form-control col-md-5" value="" type="text" name="mob_proc" id="mob_proc" placeholder="Mobile Processor">
+                                    </div>
+                                    <div class="row form-group">
+                                        <input value="<%= data.ram %>" required="" class="form-control col-md-5" value="" type="text" name="mob_ram" id="mob_ram" placeholder="Mobile Ram">
+                                    </div>
+                                    <div class="row form-group">
+                                        <input value="<%= data.screen %>" required="" class="form-control col-md-5" value="" type="text" name="mob_screen" id="mob_screen" placeholder="Screen Size">
+                                    </div>
+                                    <div class="row form-group">
+                                        <input value="<%= data.color %>" required="" class="form-control col-md-5" value="" type="text" name="color" id="color" placeholder="Color">
+                                    </div>
+                                <% } else { %>
+                                    <div class="row form-group">
+                                        <input value="<%= data.processor %>" required="" class="form-control col-md-5" value="" type="text" name="lap_proc" id="lap_proc" placeholder="Laptop Processor">
+                                    </div>
+                                    <div class="row form-group">
+                                        <input value="<%= data.ram %>" required="" class="form-control col-md-5" value="" type="text" name="lap_ram" id="lap_ram" placeholder="Laptop Ram">
+                                    </div>
+                                    <div class="row form-group">
+                                        <input value="<%= data.hd %>" required="" class="form-control col-md-5" value="" type="text" name="lap_hd" id="lap_hd" placeholder="HD Capacity">
+                                    </div>
+                                <% } %>
+                            </div>
+                            <div class="row form-group">
+                                <button type="submit" id="update" class="btn btn-success offset-m2  col-md-3 font_family_cursive waves-effect waves-light" name="action">Update
+                                    <i class="material-icons right">Update</i>
+                                </button>
+                            </div>
+                        <!-- </form> -->
+                    </div>
+                    <div class="col-md-offset-1 col-md-2">
+                        <img src="<%= data.pic %>" alt="" class="" width="300" height="300">
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+    </section>
+</body>
+
+
+<footer>
+    <%- include('../common/footer.ejs')%>
+</footer>

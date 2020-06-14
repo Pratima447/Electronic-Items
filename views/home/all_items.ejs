@@ -1,0 +1,82 @@
+<%# views/home %>
+
+<%- include('../common/header.ejs') %>
+
+<body style="background-color: #f5f5f5 !important;">
+    <section class="container-fluid font_family_all m_0_10">
+        <div class="row">
+            <center class="col-md-12 col-lg-12 col-sm-12 padding_10 white_background">
+                <div class="padding_10">
+                    <div class="padding_10">
+                        <h1>Electronics Items <span class="font_15_rem">-Mantainance made easy!</span></h1>
+                    </div>
+                </div>
+            </center>
+        </div>
+        <div class="row">
+            <center>
+                <a href="#" data-toggle="modal" data-target="#create_new_item" id="create_new" class="btn btn-info header_nav">
+                    <span id="login_lara">Create</span>
+                </a>
+            </center>
+        </div>
+        <br><br>
+        <div class="row">
+            <div class="col-md-6 col-lg-6 col-sm-12 white_background margin_0_10">
+                <%- include('../home/list.ejs')%>
+            </div>
+            <div class="col-md-5 col-lg-5 col-sm-12 white_background margin_0_10">
+                <%- include('../home/item_data.ejs')%>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add new item -->
+    <div class="modal fade modal_indexr in col-md-offset-3 col-md-5" id="create_new_item" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <button type="button" class="close" id="close_modal" data-dismiss="modal">
+                    <div class="login_cross">Close</div>
+                </button>
+                <div class="modal-header modal-header-nav">
+                    <div>
+                        <center class="font_size_18">All fields are mandatory</center>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="row form-group">
+                        <input required type="text" id="name" name="name" class="form-control col-md-8" placeholder="Name">
+                    </div>
+                    <div class="row form-group">
+                        <textarea required name="desc" id="desc" cols="30" rows="10" class="form-control col-md-8"  placeholder="Description"></textarea>
+                    </div>
+                
+                    <div class="row form-group">
+                        <input required type="file" id="pic" name="pic" accept = "image/*" class="row line_h_2  col-md-8">
+                    </div>
+
+                    <div class="row form-group">
+                        <select name="item_type" id="item_type" class="form-control col-md-8">
+                            <option required value="" disabled selected>Type</option>
+                            <option value="mobile">Mobile</option>
+                            <option value="laptop">Laptop</option>
+                        </select>
+                    </div>
+                    
+                    <div id="item_attr">
+                        <!-- attributes here -->
+                    </div>
+                    <div class="row form-group">
+                        <button type="button" id="submit" class="btn offset-m2  col-md-3 font_family_cursive waves-effect waves-light" name="action">Submit
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<footer>
+    <%- include('../common/footer.ejs')%>
+</footer>
