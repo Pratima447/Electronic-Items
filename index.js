@@ -72,7 +72,7 @@ app.post('/logout', login_controlller.log_out);
 app.post('/items', item_controller.get_items);
 app.post('/save_img',item_controller.save_img);
 app.post('/create', item_controller.save_item);
-app.get('/get_details', item_controller.get_details);
+app.post('/get_details', item_controller.get_details);
 app.post('/update_item', item_controller.update_item);
 app.post('/delete_item', item_controller.delete_item);
 app.get('/edit_item', item_controller.edit_item);

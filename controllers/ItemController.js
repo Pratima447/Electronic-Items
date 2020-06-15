@@ -130,10 +130,11 @@ exports.save_item = function (req, res) {
 }
 
 exports.get_details = function (req, res) {
+    res.cookie('main_item', '', { maxAge: 0 });
+
     var id = req.body.item_id;
     var result = get_data(id);
 
-    console.log('sending dtaa....')
     if (result != 0) {
         res.send(result);
     } else {
@@ -141,10 +142,10 @@ exports.get_details = function (req, res) {
     }
     async function get_data(id) {
         try {
+
+            res.cookie('main_item', id, { maxAge: 900000 });
             var result = await get_item_data.get_data(id);
-            console.log('done with promise');
-            return (res.send(result));
-            return result;
+            return res.send(result);
           
         } catch (error) {
             console.log('Error Occurred');
