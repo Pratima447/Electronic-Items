@@ -80,7 +80,18 @@ $(document).ready(function () {
     })
 })
 
-$(window).load(function () {
+$(document).on('click', "input.product_info", function () {
+    var id = this.id;
+    console.log(id);
+    $.post('/get_details', { item_id: id })
+        .done(function (result) {
+            console.log(result);
+            window.location.href = ("/");
+     })
+});
+
+$(window).on('load', function () {
+
     setTimeout(function () {
         $.post('/items', {})
             .done(function (result) {
@@ -94,28 +105,59 @@ $(window).load(function () {
                     } else {
                         attr = '<div><i class="material-icons">developer_board</i><span class="font_size_14">  ' + value.processor + '</span></div><div><i class="material-icons">memory</i><span class="font_size_14">  ' + value.ram + '</span></div><div><i class="material-icons">airplay</i><span class="font_size_14">  ' + value.hd + '</span></div>';
                     }
-                    $('#show_items').append('<div value=' + value.id + '" class="product_info item_main_card item_card_border col-md-offset-1 col-md-6 "><div class="img_container"><img class="item_img" src=' + value.pic + ' alt=' + value.name + '></div><div class="row item_detail_chunk font_size_14 sans_font"><div><span class="item_title">' + value.name + '</span></div></div><hr class="custom_line"><div class="col-md-12 col-sm-12 col-lg-12"><div><p>' + attr + '</p></div></div>' +
-                    '<div class="row"><div class=""><input type="button" value="See details" id='+value.id+' class=" btn btn-info header_nav"></div></div></div > ');
+                    $('#show_items').append('<div value=' + value.id + '" class=" item_main_card item_card_border col-md-offset-1 col-md-6 "><div class="img_container"><img class="item_img" src=' + value.pic + ' alt=' + value.name + '></div><div class="row item_detail_chunk font_size_14 sans_font"><div><span class="item_title">' + value.name + '</span></div></div><hr class="custom_line"><div class="col-md-12 col-sm-12 col-lg-12"><div><p>' + attr + '</p></div></div>' +
+                    '<div class="row"><div class=""><input type="button" value="See details" id='+value.id+' class="product_info btn btn-info header_nav"></div></div></div > ');
         
                 })
 
                 // for single item 
+                var current_item = document.cookie.match("main_item");
+                var index = getCookie(current_item);
+                index--;
+                console.log('inex=' + index);
+                if (index) {
+                    var value = result.data[index];
+                    console.log(value)
+                } else {
+                    var value = result.data[0];
+                }
+
                 $('#placeholder_item_data').css('display', 'none');
 
-                var value = result.data[0];
                 var attr = '';
                 if (value.type == 'mobile') {
                     attr = '<div><i class="material-icons">developer_board</i><span class="font_size_14">  ' + value.processor + '</span></div><div><i class="material-icons">memory</i><span class="font_size_14">  ' + value.ram + '</span></div><div><i class="material-icons">airplay</i><span class="font_size_14">  ' + value.screen + '</span></div><div><i class="material-icons">colorize</i><span class="font_size_14">  ' + value.color + '</span></div>';
                 } else {
                     attr = '<div><i class="material-icons">developer_board</i><span class="font_size_14">  ' + value.processor + '</span></div><div><i class="material-icons">memory</i><span class="font_size_14">  ' + value.ram + '</span></div><div><i class="material-icons">airplay</i><span class="font_size_14">  ' + value.hd + '</span></div>';
                 }
-                $('#detail_item_info').append('<div id="single_item" value=' + value.id + '" class="item_main_card item_card_border col-md-offset-1 col-md-10 "><input type="hidden" id="item_id" value=' + value.id + '><div class="img_container full_height"><img class="item_img full_height" src=' + value.pic + ' alt=' + value.name + ' title=' + value.name + ' ></div><div class="row item_detail_chunk font_size_14 sans_font"><div><span class="item_title">' + value.name + '</span></div></div><hr class="custom_line"><div class="col-md-12 col-sm-12 col-lg-12"><div><p>' + attr + '</p></div>' +
+                $('#detail_item_info').append('<div id="single_item" value=' + value.id + '" class="item_main_card item_card_border col-md-offset-1 col-md-10 col-xs-12"><input type="hidden" id="item_id" value=' + value.id + '><div class="img_container full_height"><img class="item_img full_height" src=' + value.pic + ' alt=' + value.name + ' title=' + value.name + ' ></div><div class="row item_detail_chunk font_size_14 sans_font"><div><span class="item_title">' + value.name + '</span></div></div><hr class="custom_line"><div class="col-md-12 col-sm-12 col-lg-12"><div><p>' + attr + '</p></div>' +
                     '<hr class="custom_line"><div class="row padding_10"><div class="col-md-12"><span>' + value.desc + '<span></div></div></div ></div > ' +
                     '<div class="row"><div class="padding_10 col-md-12"></div></div>');
 
             
             })
     }, 2000)
+
+    function getCookie(name) {
+        // console.log('name=' + name);
+        // Split cookie string and get all individual name=value pairs in an array
+        var cookieArr = document.cookie.split(";");
+        
+        // Loop through the array elements
+        for(var i = 0; i < cookieArr.length; i++) {
+            var cookiePair = cookieArr[i].split("=");
+            
+            /* Removing whitespace at the beginning of the cookie name
+            and compare it with the given string */
+            if(name == cookiePair[0].trim()) {
+                // Decode the cookie value and return
+                return decodeURIComponent(cookiePair[1]);
+            }
+        }
+        
+        // Return null if not found
+        return null;
+    }
 
 })
 
@@ -229,12 +271,6 @@ jQuery("input#pic").change(function () {
             console.log(result);
         }
     })
-})
-
-// get one item data
-$(".product_info").on('click', function () {
-    var id = $(this).attr('id');
-    console.log('id=' + id);
 })
 
 $('#logout').on('click', function () {
